@@ -5,6 +5,7 @@ import open3d as o3d
 import matplotlib.pyplot as plt
 from cut import *
 from z_mean import *
+from coord3d_to_array import *
 
 if __name__ == '__main__':
     root_path = r'/Users/dylan/Desktop/temp/magang/data/上表面/pcd'
@@ -15,7 +16,13 @@ if __name__ == '__main__':
         pcd = o3d.io.read_point_cloud(pcd_path)
         points = np.asarray(pcd.points)
 
-        floor, tail = cut1(points,file_id)
-        z_mean = z_mean1(points, floor, tail)
-        print(z_mean)
-        # break
+
+        # floor, tail = cut1(points,file_id)
+        # z_mean = z_mean1(points, floor, tail)
+        # print(z_mean)
+
+        coord3d_to_array(points)  # need to fill nan
+
+
+
+
