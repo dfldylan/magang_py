@@ -1,6 +1,7 @@
 import numpy as np
 import multiprocessing.dummy as mp
 import pandas as pd
+from scipy import interpolate
 
 def coord3d_to_array(points):
     x_unique = np.unique(points[:, 0])  # need to remove '0'
@@ -32,3 +33,14 @@ def coord3d_to_array(points):
     mp.Pool().map(_fill_ret, zip(coord, z))
 
     return ret
+
+def fill_nan(array):
+    array = np.ma.masked_invalid(array)  # ②
+    x = np.arange(0, array.shape[1])  # ③
+    y = np.arange(0, array.shape[0])
+    xx, yy = np.meshgrid(x, y)  # ④
+    x1 = xx[~array.mask]  # ⑤
+    y1 = yy[~array.mask]
+    newarr = array[~array.mask].data
+    ret_filled = interpolate.griddata((x1, y1), newarr.ravel(), (xx, yy), method='cubic')  # ⑥
+    return ret_filled

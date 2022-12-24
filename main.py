@@ -21,7 +21,8 @@ if __name__ == '__main__':
         # z_mean = z_mean1(points, floor, tail)
         # print(z_mean)
 
-        coord3d_to_array(points)  # need to fill nan
+        array = coord3d_to_array(points)
+        array_fillna = fill_nan(array)  # need to fill nan
 
 
 
